@@ -265,17 +265,8 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Availability */}
-              <div className="mt-12 p-6 rounded-lg bg-neutral-50 border border-neutral-200">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-sm font-medium text-neutral-950">Available for opportunities</span>
-                </div>
-                <p className="text-sm text-neutral-600">
-                  I'm currently open to internship opportunities and freelance projects. 
-                  Let's create something amazing together!
-                </p>
-              </div>
+              
+              
             </div>
           </div>
         </div>
