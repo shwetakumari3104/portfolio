@@ -9,13 +9,6 @@ const skills = [
   { icon: Palette, label: "UI/UX Design", desc: "Figma, Tailwind CSS" },
 ];
 
-const stats = [
-  { value: "9.24", label: "CGPA" },
-  { value: "3", label: "Live Projects" },
-  { value: "2×", label: "GSSoC Contributor" },
-  { value: "1", label: "Ideaverse Prize" },
-];
-
 const featured = [
   {
     title: "Crimora",
@@ -100,26 +93,11 @@ export default function Index() {
             </div>
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-float">
-          <div className="w-6 h-10 border-2 border-neutral-600 rounded-full flex items-start justify-center p-2">
-            <div className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" />
-          </div>
-        </div>
       </section>
 
       {/* Skills Preview - Light */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 pb-16 border-b border-neutral-200">
-            {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-4xl md:text-5xl font-display font-bold text-neutral-950">{s.value}</p>
-                <p className="mt-2 text-xs uppercase tracking-wider text-neutral-500">{s.label}</p>
-              </div>
-            ))}
-          </div>
           <div className="grid md:grid-cols-3 gap-8">
             {skills.map((skill, index) => (
               <div
@@ -188,10 +166,7 @@ export default function Index() {
         <div className="container mx-auto px-6 text-center">
           <p className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
-            Currently: preparing for campus placements
           </p>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-neutral-950">
             Let's Build Something
