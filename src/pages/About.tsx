@@ -1,5 +1,6 @@
+import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
-import { GraduationCap, Award, Users, FileCode } from "lucide-react";
+import { GraduationCap, Award, Users, FileCode, Brush, X } from "lucide-react";
 
 const education = [
   {
@@ -60,13 +61,30 @@ const achievements = [
   },
 ];
 
+// Put your images in public/art/ with these names (or change the src paths).
+const artworks = [
+  { src: `${import.meta.env.BASE_URL}art/art-1.jpeg`, title: "Untitled I", medium: "Charcoal on paper" },
+  { src: `${import.meta.env.BASE_URL}art/art-2.jpeg`, title: "Untitled II", medium: "Graphite on paper" },
+  { src: `${import.meta.env.BASE_URL}art/art-3.jpeg`, title: "Untitled III", medium: "Acrylic on canvas" },
+  { src: `${import.meta.env.BASE_URL}art/art-4.jpeg`, title: "Untitled IV", medium: "Charcoal on paper" },
+];
+
 export default function About() {
+  const [open, setOpen] = useState<number | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   return (
     <Layout>
       {/* Hero Section - Dark */}
       <section className="py-24 md:py-32 bg-neutral-950 pt-32">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="grid md:grid-cols-[1fr_auto] items-center gap-12">
+          <div className="max-w-3xl">
             <p
               className="text-neutral-500 text-sm uppercase tracking-[0.3em] mb-6 opacity-0 animate-fade-in"
               style={{ animationDelay: "0.1s" }}
@@ -92,6 +110,22 @@ export default function About() {
               user-focused, practical solutions.
             </p>
           </div>
+          {/* Your photo: put it at public/me.jpeg */}
+          <figure
+            className="opacity-0 animate-fade-in mx-auto md:mx-0"
+            style={{ animationDelay: "0.4s" }}
+          >
+            <img
+              src={`${import.meta.env.BASE_URL}me.JPG`}
+              alt="Shweta Kumari"
+              className="w-56 h-56 md:w-72 md:h-72 rounded-2xl object-cover"
+              onError={(e) => {
+                const fig = e.currentTarget.parentElement;
+                if (fig) fig.style.display = "none";
+              }}
+            />
+          </figure>
+          </div>
         </div>
       </section>
 
@@ -104,7 +138,8 @@ export default function About() {
               <p className="text-neutral-600 leading-relaxed">
                 A final-year CS student at BIT Bengaluru who loves turning messy problems into
                 clean, working products. I build full-stack and AI-driven apps, and I care as much
-                about the person using them as the system underneath.
+                about the person using them as the system underneath. Away from the screen, I draw and
+                paint: charcoal, graphite, and canvas.
               </p>
             </div>
             <div className="p-8 border border-neutral-200 rounded-lg">
@@ -208,6 +243,66 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* Beyond the code - Dark gallery */}
+      <section className="py-24 bg-neutral-950 overflow-hidden">
+        <div className="container mx-auto px-6">
+          <p className="text-neutral-500 text-sm uppercase tracking-[0.3em] mb-4">Beyond the code</p>
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4 text-white">
+            The art <span className="text-neutral-500">side</span>
+          </h2>
+          <p className="text-neutral-400 max-w-2xl mb-16">
+            When I'm not building, I'm drawing and painting. It keeps me patient, observant,
+            and a little messier than my code.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8">
+            {artworks.map((a, i) => (
+              <button
+                key={a.src}
+                onClick={() => setOpen(i)}
+                className={`group text-left focus:outline-none ${i % 2 === 1 ? "md:mt-14" : ""}`}
+                aria-label={`View ${a.title}`}
+              >
+                <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-neutral-900 flex items-center justify-center">
+                  <Brush className="w-8 h-8 text-neutral-700" />
+                  <img
+                    src={a.src}
+                    alt={a.title}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox */}
+      {open !== null && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex flex-col items-center justify-center p-6"
+          onClick={() => setOpen(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <button className="absolute top-6 right-6 text-neutral-300 hover:text-white" aria-label="Close">
+            <X size={28} />
+          </button>
+          <img
+            src={artworks[open].src}
+            alt={artworks[open].title}
+            className="max-h-[80vh] max-w-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <p className="mt-4 text-white font-display font-semibold">{artworks[open].title}</p>
+          <p className="text-xs uppercase tracking-wider text-neutral-400">{artworks[open].medium}</p>
+        </div>
+      )}
     </Layout>
   );
 }
