@@ -122,3 +122,6 @@ html.dark .border-neutral-200,
 html.dark .border-neutral-300 { border-color: #2e2e2e; }
 html.dark a.bg-neutral-950,
 html.dark button.bg-neutral-950 { border: 1px solid #404040; }
+
+/* Keep white buttons readable in dark mode (their dark text was being remapped to white) */
+html.dark :is(a, button).bg-white.text-neutral-950 { color: #0a0a0a; }
